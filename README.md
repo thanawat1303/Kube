@@ -15,6 +15,7 @@
          ![](image/environment.png)
 
        - Click Environment Variables...
+       
          ![](image/clickEnVa.png)
 
    - minikube
