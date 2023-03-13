@@ -1,7 +1,9 @@
 # Kubernetes
 ### Step on Work
 1. Install tools Kubernetes
-   - kubectl on windows
+   - <details>
+     <summary>kubectl on windows</summary>
+
      - Ref
        - https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
 
@@ -37,7 +39,11 @@
        kubectl version --client
        ```
 
-   - minikube
+     </details>
+     
+   - <details>
+     <summary>minikube</summary>
+
      - Ref
        - https://minikube.sigs.k8s.io/docs/start/
 
@@ -55,5 +61,7 @@
         }
        ```
      - Restart Terminal
+
+     </details>
 
    - docker engine
