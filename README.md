@@ -42,7 +42,7 @@
        - https://minikube.sigs.k8s.io/docs/start/
 
      - download minikube.exe
-       ```
+       ```ruby
        New-Item -Path 'c:<path want to install>' -Name 'minikube' -ItemType Directory -Force #create folder minikube
        Invoke-WebRequest -OutFile 'c:<path want to install>\minikube\minikube.exe' -Uri 'https://github.com/kubernetes/minikube/releases/latest/download/minikube-windows-amd64.exe' -UseBasicParsing #download install to path
        ```
