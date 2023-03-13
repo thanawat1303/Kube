@@ -4,10 +4,10 @@
    - kubectl on windows
      - Ref
        - https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
-       
-     - download installed Kubectl to path work /Kube/kubectl
 
-       ```ruby
+     - download Kubectl.exe to path work /Kube/kubectl
+
+       ```
        curl.exe -LO "https://dl.k8s.io/release/v1.26.0/bin/windows/amd64/kubectl.exe"
        ```
        
@@ -32,8 +32,17 @@
        - Add Path that have kubectl.exe
        - Click OK
     
-     - 
-         
+     - Test Kubectl enable 
+       ```
+       kubectl version --client
+       ```
 
    - minikube
+     - Ref
+       - https://minikube.sigs.k8s.io/docs/start/
+     - download minikube.exe
+       ```
+       New-Item -Path 'c:<path want to install>' -Name 'minikube' -ItemType Directory -Force #create folder minikube
+       Invoke-WebRequest -OutFile 'c:<path want to install>\minikube\minikube.exe' -Uri 'https://github.com/kubernetes/minikube/releases/latest/download/minikube-windows-amd64.exe' -UseBasicParsing #download install to path
+       ```
    - docker engine
