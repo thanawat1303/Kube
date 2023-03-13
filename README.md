@@ -2,7 +2,7 @@
 ### Step on Work
 1. Install tools Kubernetes
    - <details>
-     <summary>kubectl on windows</summary>
+     <summary>kubectl</summary>
 
      - Ref
        - https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
