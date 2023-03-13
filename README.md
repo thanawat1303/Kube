@@ -11,8 +11,11 @@
      - add Path to environment variable
 
        - Search environment
+
         ![](image/environment.png)
+
        - Click Environment Variables...
+       
         ![](image/clickEnVa.png)
 
    - minikube
