@@ -2,6 +2,9 @@
 ### Step on Work
 1. Install tools Kubernetes
    - kubectl on windows
+     - Ref
+       - https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
+       
      - download installed Kubectl to path work /Kube/kubectl
 
        ```ruby
@@ -15,8 +18,22 @@
          ![](image/environment.png)
 
        - Click Environment Variables...
-       
+
          ![](image/clickEnVa.png)
+
+       - Select Path Click Edit
+
+         ![](image/selectPath.png)
+
+       - Click New
+         
+         ![](image/listPath.png)
+
+       - Add Path that have kubectl.exe
+       - Click OK
+    
+     - 
+         
 
    - minikube
    - docker engine
