@@ -11,9 +11,9 @@
      - add Path to environment variable
 
        - Search environment
-        [](image/environment.png)
+        ![](image/environment.png)
        - Click Environment Variables...
-        [](image/clickEnVa.png)
+        ![](image/clickEnVa.png)
 
    - minikube
    - docker engine
