@@ -54,7 +54,7 @@
       Invoke-WebRequest -OutFile 'c:<path want to install>\minikube\minikube.exe' -Uri 'https://github.com/kubernetes/minikube/releases/latest/download/minikube-windows-amd64.exe' -UseBasicParsing #download install to path
       ```
 
-    - Add Path to environment variable
+    - Add Path to environment variable run Admin
       ```ruby
       $oldPath = [Environment]::GetEnvironmentVariable('Path', [EnvironmentVariableTarget]::Machine)
       if ($oldPath.Split(';') -inotcontains 'C:<path folder minikube.exe>'){ `
@@ -68,6 +68,39 @@
     <details>
     <summary>Docker engine</summary>
 
-    
+    - Install Docker Desktop
+      - https://www.docker.com/products/docker-desktop/
 
     </details>
+
+2. Config cluster Kubernetes
+   - Ref 
+     - https://minikube.sigs.k8s.io/docs/drivers/docker/
+
+   - Create/Start Cluster minikube in docker on Command Prompt
+     ```
+     minikube start --driver=docker
+     ```
+
+   - Check pods cluster
+     ```
+     kubectl get pods -A
+     ```
+  
+   - Check nodes 
+     ```
+     kubectl get nodes
+     ```
+   
+   - Open Dashboard minikube
+     ```
+     minikube dashboard #open addon
+     ```
+
+     - Set Loadbalance
+       ```
+       minikube tunnel
+       ```
+
+### Command 
+
