@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-ingress
+  namespace: iamapinan
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+  - match: Host(`mydomain.com`)
+    kind: Rule
+    services:
+    - name: nginx-service
+      port: 80

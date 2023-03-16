@@ -67,7 +67,7 @@
 
     <details>
     <summary>Docker engine</summary>
-
+    - Install Linux Ubuntu on windown
     - Install Docker Desktop
       - https://www.docker.com/products/docker-desktop/
 
@@ -97,10 +97,54 @@
      minikube dashboard #open addon
      ```
 
-     - Set Loadbalance
-       ```
-       minikube tunnel
-       ```
+   - Set Loadbalance
+     ```
+     minikube tunnel
+     ```
+3. Install Traefik
+   - Ref
+     - 
+     - https://github.com/iamapinan/kubeplay-traefik
+
+   - Create traefik-setup.ps1
+     <details>
+     <summary>Show code</summary>
+
+     ```
+     ```
+
+     </details>
+
+   - Create file traefik-dashboard.yml
+     ```ruby
+     ```
+
+   - run file traefik-setup.ps1
+     ```
+     ./traefik-setup.ps1
+     ```
+
+   - Deploy traefik-dashboard.yml
+   - Get detail traefik show ip
+     ```
+     kubectl get svc #look at EXTERNAL-IP
+     ```
+
+   - Set Domain in file host in path windows
+     ```ruby
+     C:\Windows\System32\drivers\etc\hosts # ex. EXTERNAL-IP traefik.spcn19.local
+     ```
+
+   - Test Open Traefik dashboard
+     ```
+     traefik.spcn19.local
+     ```
 
 ### Command 
+ - Ref 
+   - https://minikube.sigs.k8s.io/docs/start/
+
+### LINK on Local
+ - traefik.spcn19.local
+ - web.spcn19.local 
 
