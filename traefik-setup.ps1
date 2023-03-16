@@ -30,10 +30,10 @@ kubectl get svc -l app.kubernetes.io/name=traefik
 kubectl get po -l app.kubernetes.io/name=traefik 
 
 $confirm = Read-Host -Prompt "Confirm (Y/N) "
+$UserTraefik = Read-Host -Prompt "Usrname Traefik "
 
 if ("$confirm" -eq "Y") {
-    bash -c "htpasswd -nB user | tee auth-secret"
-    bash -c "kubectl create secret generic -n traefik dashboard-auth-secret \
-    --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml"
+    bash -c "htpasswd -nB $UserTraefik | tee auth-secret"
+    bash -c "kubectl create secret generic -n traefik dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml"
 }
 

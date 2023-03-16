@@ -101,6 +101,7 @@
      ```
      minikube tunnel
      ```
+
 3. Install Traefik
    - Ref
      - 
@@ -115,7 +116,7 @@
 
      </details>
 
-   - Create file traefik-dashboard.yml
+   - Create file traefik-dashboard.yaml
      ```ruby
      ```
 
@@ -123,8 +124,14 @@
      ```
      ./traefik-setup.ps1
      ```
+   
+   - Get users to dashboard
 
-   - Deploy traefik-dashboard.yml
+   - Apply traefik-dashboard.yaml
+     ```
+     kubectl apply -f traefik-dashboard.yaml
+     ```
+     
    - Get detail traefik show ip
      ```
      kubectl get svc #look at EXTERNAL-IP
@@ -137,7 +144,7 @@
 
    - Test Open Traefik dashboard
      ```
-     traefik.spcn19.local
+     traefik.spcn19.local/dashboard/
      ```
 
 ### Command 

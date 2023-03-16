@@ -1,2 +1,4 @@
 /kubectl
 /minikube
+auth-secret
+dashboard-secret.yaml
