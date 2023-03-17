@@ -5,8 +5,8 @@
 ### Step on Work
 - [Install Install tools Kubernetes](#install-tools)
 - [Config cluster Kubernetes](#Config-cluster)
-- [Install Install tools Kubernetes](#install-tools)
-- [Config cluster Kubernetes](#Config-cluster)
+- [Deploy Traefik](#deploy-traefik)
+- [Config cluster Kubernetes](#deploy-service)
 
 ---
 
@@ -258,7 +258,7 @@
      ```
      ![](image/dashboard-t5k.png | width=300)
 
-4. Deploy Service <a id="deploy-Service"></a>
+4. Deploy Service <a id="deploy-service"></a>
    - Create rancher-deployment.yaml
      <details>
      <summary>Show code</summary>
