@@ -91,7 +91,7 @@
       - https://www.docker.com/products/docker-desktop/
 
     - Open docker desktop
-    
+
     </details>
 
 2. Config cluster kubernetes <a id="Config-cluster"></a>
@@ -117,13 +117,23 @@
      ```
      minikube dashboard #open addon
      ```
+     <details>
+     <summary>Show dashboard</summary>
+
      ![](image/dashboard-minikube.png)
+
+     </details>
 
    - Start Loadbalance minikube
      ```
      minikube tunnel
      ```
+     <details>
+     <summary>Tunnel start</summary>
+
      ![](image/miniTunnel.png)
+
+     </details>
 
 3. Deploy traefik <a id="deploy-traefik"></a>
    - Ref
@@ -260,7 +270,12 @@
      ```
      traefik.spcn19.local/dashboard/
      ```
+     <details>
+     <summary>Show dashboard</summary>
+
      ![](image/dashboard-t5k.png)
+
+     </details>
 
 4. Deploy service <a id="deploy-service"></a>
    - Create rancher-deployment.yaml
@@ -337,7 +352,12 @@
      ```
      web.spcn19.local 
      ```
+     <details>
+     <summary>Show service</summary>
+
      ![](image/web_spcn19local.png) 
+
+     </details>
 
 ---
 
