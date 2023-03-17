@@ -105,7 +105,7 @@
 
 3. Install Traefik
    - Ref
-     - 
+     - https://youtu.be/NpKkD6t278M
      - https://github.com/iamapinan/kubeplay-traefik
 
    - Create traefik-setup.ps1
@@ -153,8 +153,8 @@
           # --from-file=users=auth-secret => set secure from file auth-secret and use is key users
           # -o yaml => output file .yaml
           # --dry-run=client => create secure object not sent to kube API server but will check syntax and validation
-        kubectl apply -f traefik-dashboard.yaml #apply traefik-dashboard.yaml for start traefik and dashboard
-        kubectl apply -f dashboard-secret.yaml #apply dashboard-secret.yaml for start secure traefik
+        kubectl apply -f traefik-dashboard.yaml #Deploy traefik-dashboard.yaml for start traefik and dashboard
+        kubectl apply -f dashboard-secret.yaml #Deploy dashboard-secret.yaml for start secure traefik
         rm auth-secret #remove file auth-secret 
         rm dashboard-secret.yaml #remove file dashboard-secret.yaml
      }
@@ -283,7 +283,7 @@
      ```
 
      </details>
-   - apply service 
+   - Deploy service web rancher
      ```
      kubectl apply -f rancher-deployment.yaml
      ```
