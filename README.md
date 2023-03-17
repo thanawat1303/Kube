@@ -164,7 +164,7 @@
 
      kubectl create namespace $KUBE_NAMESPACE #create namespace on cluster
      kubectl config set-context --current --namespace=$KUBE_NAMESPACE #set config on kube defalt namespace
-     kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml #apply CRD define resource
+     kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml #apply CRD define resource ingress middleware tls
      kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml #apply RBAC kubernetes define role for CRD
 
      if ( -Not (Get-Command scoop -ErrorAction Ignore)) { #check scoop already

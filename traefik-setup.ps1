@@ -9,8 +9,8 @@ kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/con
 if ( -Not (Get-Command scoop -ErrorAction Ignore)) {
     $username = Read-Host -Prompt "Username "
     irm get.scoop.sh | iex 
-    $env:Path -split ';'
-    $env:Path += ";C:\Users\$username\scoop\shims"
+    $env:Path -split ';' > $null
+    $env:Path += ";C:\Users\$username\scoop\shims" > $null
 }
 
 if ( -Not (Get-Command helm -ErrorAction Ignore)) {
