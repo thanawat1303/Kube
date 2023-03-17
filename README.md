@@ -168,7 +168,7 @@
 
       ```yaml
       apiVersion: traefik.containo.us/v1alpha1 #define api version is traefik.containo.us/v1alpha1 for revert proxy , load balance and auto set SSL/TLS option traefik
-      kind: Middleware #define kind is Middleware for connect service
+      kind: Middleware #define type object is Middleware for connect service
       metadata:
         name: traefik-basic-authen #define name traefik-basic-authen
         namespace: spcn19 #define namespace for use traefik
@@ -178,25 +178,25 @@
           removeHeader: true #set remove header for upspeed and up efficiency
       ---
       apiVersion: traefik.containo.us/v1alpha1
-      kind: IngressRoute #define kind ingressRount for setup rout to dashborad traefik
+      kind: IngressRoute #define type object ingressRount for setup route to dashborad traefik
       metadata:
-        name: traefik-dashboard #name
+        name: traefik-dashboard
         namespace: spcn19
         annotations:
-          kubernetes.io/ingress.class: traefik
-          traefik.ingress.kubernetes.io/router.middlewares: traefik-basic-authen
-      spec:
+          kubernetes.io/ingress.class: traefik #define connect ingress this is traefik
+          traefik.ingress.kubernetes.io/router.middlewares: traefik-basic-authen #define middleware use in ingress
+      spec: #define spec in traefik-dashboard
         entryPoints:
-          - websecure
-        routes:
-          - match: Host(`traefik.spcn19.local`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
-            kind: Rule
-            middlewares:
-              - name: traefik-basic-authen
-                namespace: spcn19
-            services:
-              - name: api@internal
-                kind: TraefikService
+          - websecure #define entrypoints is websecure
+        routes: #define route
+          - match: Host(`traefik.spcn19.local`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`)) #define condition access traefik-dashboard
+            kind: Rule #define type object is Rule for access
+            middlewares: #define middleware before access service api@internal
+              - name: traefik-basic-authen #use middleware name traefik-basic-authen
+                namespace: spcn19 #this run on space spcn19
+            services: #services on Traefik
+              - name: api@internal #name service
+                kind: TraefikService #define type object is TraefikService
       ```
 
      </details>
@@ -205,14 +205,7 @@
      ```
      ./traefik-setup.ps1
      ```
-   
-   - Get users to dashboard
 
-   - Apply traefik-dashboard.yaml
-     ```
-     kubectl apply -f traefik-dashboard.yaml
-     ```
-     
    - Get detail traefik show ip
      ```
      kubectl get svc #look at EXTERNAL-IP
