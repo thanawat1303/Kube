@@ -129,7 +129,7 @@
      minikube tunnel
      ```
      <details>
-     <summary>Tunnel start</summary>
+     <summary>Show tunnel start</summary>
 
      ![](image/miniTunnel.png)
 
