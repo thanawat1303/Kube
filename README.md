@@ -170,18 +170,18 @@
       apiVersion: traefik.containo.us/v1alpha1 #define api version is traefik.containo.us/v1alpha1 for revert proxy , load balance and auto set SSL/TLS option traefik
       kind: Middleware #define type object is Middleware for connect service
       metadata:
-        name: traefik-basic-authen #define name traefik-basic-authen
-        namespace: spcn19 #define namespace for use traefik
+        name: traefik-basic-authen #define name object traefik-basic-authen
+        namespace: spcn19 #define namespace want install traefik-basic-authen
       spec: #define spec in traefik-basic-authen
         basicAuth: #define secure for access to traefik
           secret: dashboard-auth-secret #define constant secure this is name dashboard-auth-secret
           removeHeader: true #set remove header for upspeed and up efficiency
       ---
       apiVersion: traefik.containo.us/v1alpha1
-      kind: IngressRoute #define type object ingressRount for setup route to dashborad traefik
+      kind: IngressRoute #define type object ingressRount for setup route
       metadata:
         name: traefik-dashboard
-        namespace: spcn19
+        namespace: spcn19 #define namespace want install traefik-dashboard
         annotations:
           kubernetes.io/ingress.class: traefik #define connect ingress this is traefik
           traefik.ingress.kubernetes.io/router.middlewares: traefik-basic-authen #define middleware use in ingress
@@ -201,7 +201,7 @@
 
      </details>
 
-   - run file traefik-setup.ps1
+   - Run file traefik-setup.ps1
      ```
      ./traefik-setup.ps1
      ```
@@ -220,11 +220,84 @@
      ```
      traefik.spcn19.local/dashboard/
      ```
+     ![](dashboard-t5k.png)
+
 4. Install Service
    - Create rancher-deployment.yaml
      <details>
      <summary>Show code</summary>
+     
+     ```yaml
+      apiVersion: apps/v1 #define apiVersion is apps/v1
+      kind: Deployment #define type object is dashboard for create pod
+      metadata: #define metadata for deployment
+        name: rancher-deployment #define name object is rancher-deployment
+        namespace: spcn19 #define namespace want install rancher-deployment
+      spec:
+        replicas: 1 #define node cluster want create pod
+        selector: #define selector pod
+          matchLabels: #define match label pod to deployment
+            app: rancher #define label pod want create on deployment
+        template: #define pod template create container
+          metadata:
+            labels:
+              app: rancher #create pod on deployment matchLabels app: rancher
+          spec: #spec on pod
+            containers: #create container
+            - name: rancher #name container
+              image: rancher/hello-world #image container
+              ports: #define port need for container
+              - containerPort: 80 #port 80
+      ---
+      apiVersion: v1
+      kind: Service #define type object is Service for loadbalance
+      metadata: 
+        name: rancher-service
+        labels:
+          name: rancher-service
+        namespace: spcn19
+      spec:
+        selector: #define selector pod match service will loadbalance
+          app: rancher #label match select pod
+        ports:
+        - name: http #name port
+          port: 80 #port running on host
+          protocol: TCP #protocal that the service use
+          targetPort: 80 #port that container use
+      ---
+      apiVersion: traefik.containo.us/v1alpha1 #define api version is traefik.containo.us/v1alpha1 for revert proxy , load balance and auto set SSL/TLS option traefik
+      kind: IngressRoute #define type object ingressRount for setup route
+      metadata:
+        name: service-ingress
+        namespace: spcn19
+      spec:
+        entryPoints:
+          - web #http
+          - websecure #https
+        routes:
+        - match: Host(`web.spcn19.local`) #access on url
+          kind: Rule #define type object is Rule for access
+          services: #define service want access
+          - name: rancher-service #define service want access name rancher-service
+            port: 80 #define port accesss on port 80
+     ```
+
      </details>
+   - apply service 
+     ```
+     kubectl apply -f rancher-deployment.yaml
+     ```
+   
+   - Set Domain in file host in path windows match traefik
+     ```ruby
+     C:\Windows\System32\drivers\etc\hosts # ex. EXTERNAL-IP web.spcn19.local 
+     ```
+
+   - Test Open rancher-service
+     ```
+     web.spcn19.local 
+     ```
+     ![](web_spcn19local.png) 
 
 ### Command 
  - Ref 

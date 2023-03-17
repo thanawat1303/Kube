@@ -38,7 +38,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: traefik-ingress
+  name: service-ingress
   namespace: spcn19
 spec:
   entryPoints:
