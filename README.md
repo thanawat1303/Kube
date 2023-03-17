@@ -68,7 +68,7 @@
     <details>
     <summary>Docker engine</summary>
 
-    - Install Linux Ubuntu on windown
+    - Install Linux Ubuntu on windows
     - Install Docker Desktop
       - https://www.docker.com/products/docker-desktop/
 
