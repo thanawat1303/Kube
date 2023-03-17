@@ -98,7 +98,7 @@
      minikube dashboard #open addon
      ```
 
-   - Set Loadbalance
+   - Start Loadbalance minikube
      ```
      minikube tunnel
      ```
