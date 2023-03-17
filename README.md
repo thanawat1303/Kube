@@ -125,10 +125,10 @@
 
      if ( -Not (Get-Command scoop -ErrorAction Ignore)) { #check scoop already
         #install scoop
-        $username = Read-Host -Prompt "Username "
-        irm get.scoop.sh | iex
-        $env:Path -split ';'
-        $env:Path += ";C:\Users\$username\scoop\shims"
+        $username = Read-Host -Prompt "Username " #Read Username computer
+        irm get.scoop.sh | iex #install scoop
+        $env:Path -split ';' #define environment
+        $env:Path += ";C:\Users\$username\scoop\shims" #define environment
      }
 
      if ( -Not (Get-Command helm -ErrorAction Ignore)) { #check helm already
@@ -136,27 +136,69 @@
         scoop install helm
      }
 
-     helm repo add traefik https://traefik.github.io/charts
-     helm repo update
-     helm install traefik traefik/traefik
+     helm repo add traefik https://traefik.github.io/charts # add repo traefik charts is traefik in helm
+     helm repo update # update repo to make prepare install traefik charts
+     helm install traefik traefik/traefik # Install traefik chart to make loadbalance and reverse Proxy 
 
-     kubectl get svc -l app.kubernetes.io/name=traefik
-     kubectl get po -l app.kubernetes.io/name=traefik 
+     kubectl get svc -l app.kubernetes.io/name=traefik #Get service label name app.kubernetes.io/ name = traefik
+     kubectl get po -l app.kubernetes.io/name=traefik #Get pod label name app.kubernetes.io/ name = traefik
 
-     $confirm = Read-Host -Prompt "Confirm (Y/N) "
-     $UserTraefik = Read-Host -Prompt "Usrname Traefik "
+     $UserTraefik = Read-Host -Prompt "Username Traefik " #Enter Username Login Traefik
 
-     if ("$confirm" -eq "Y") {
-        bash -c "htpasswd -nB $UserTraefik | tee auth-secret"
-        bash -c "kubectl create secret generic -n traefik dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml"
+     if ( -Not ("$UserTraefik" -eq " ")) { #Check emply value
+        bash -c "htpasswd -nB $UserTraefik | tee auth-secret" #Create password to hash
+        bash -c "kubectl create secret generic -n traefik dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml" #Genarate secure password to users and create file dashboard-secret.yaml
      }
      ```
 
      </details>
 
    - Create file traefik-dashboard.yaml
-     ```ruby
-     ```
+     <details>
+     <summary>Show code</summary>
+
+    ```yaml
+    apiVersion: traefik.containo.us/v1alpha1
+    kind: Middleware
+    metadata:
+      name: traefik-basic-authen
+      namespace: spcn19
+    spec:
+      basicAuth:
+        secret: dashboard-auth-secret
+        removeHeader: true
+    ---
+    apiVersion: v1
+    data:
+      users: c3BjbjE5OiQyeSQwNSQ5UHFNL3dQMGxXNC9iMTRSaEMxc3llMUJxME5VUjY2VnIxT29XZk5HVVFELzRxc09aVHNSMgoK
+    kind: Secret
+    metadata:
+      name: dashboard-auth-secret
+      namespace: spcn19
+    ---
+    apiVersion: traefik.containo.us/v1alpha1
+    kind: IngressRoute
+    metadata:
+      name: traefik-dashboard
+      namespace: spcn19
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        traefik.ingress.kubernetes.io/router.middlewares: traefik-basic-authen
+    spec:
+      entryPoints:
+        - websecure
+      routes:
+        - match: Host(`traefik.spcn19.local`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+          kind: Rule
+          middlewares:
+            - name: traefik-basic-authen
+              namespace: spcn19
+          services:
+            - name: api@internal
+              kind: TraefikService
+    ```
+
+     </details>
 
    - run file traefik-setup.ps1
      ```
