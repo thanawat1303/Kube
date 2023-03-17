@@ -6,9 +6,10 @@
 - [Install Install tools Kubernetes](#install-tools)
 1. Install tools Kubernetes <a id="install-tools"></a>
     <details>
-    <summary>kubectl</summary>
+    <summary>Ref</summary>
 
     - https://youtu.be/g-9H2urCSVY
+    
     </details>
 
     <details>
