@@ -4,8 +4,7 @@
   
 ### Step on Work
 - [Install Install tools Kubernetes](#install-tools)
-1. Install tools Kubernetes 
-<a id="install-tools"></a>
+1. Install tools Kubernetes <a id="install-tools"></a>
    - Ref 
      - https://youtu.be/g-9H2urCSVY
 
