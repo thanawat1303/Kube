@@ -157,46 +157,46 @@
      <details>
      <summary>Show code</summary>
 
-    ```yaml
-    apiVersion: traefik.containo.us/v1alpha1
-    kind: Middleware
-    metadata:
-      name: traefik-basic-authen
-      namespace: spcn19
-    spec:
-      basicAuth:
-        secret: dashboard-auth-secret
-        removeHeader: true
-    ---
-    apiVersion: v1
-    data:
-      users: c3BjbjE5OiQyeSQwNSQ5UHFNL3dQMGxXNC9iMTRSaEMxc3llMUJxME5VUjY2VnIxT29XZk5HVVFELzRxc09aVHNSMgoK
-    kind: Secret
-    metadata:
-      name: dashboard-auth-secret
-      namespace: spcn19
-    ---
-    apiVersion: traefik.containo.us/v1alpha1
-    kind: IngressRoute
-    metadata:
-      name: traefik-dashboard
-      namespace: spcn19
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        traefik.ingress.kubernetes.io/router.middlewares: traefik-basic-authen
-    spec:
-      entryPoints:
-        - websecure
-      routes:
-        - match: Host(`traefik.spcn19.local`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
-          kind: Rule
-          middlewares:
-            - name: traefik-basic-authen
-              namespace: spcn19
-          services:
-            - name: api@internal
-              kind: TraefikService
-    ```
+      ```yaml
+      apiVersion: traefik.containo.us/v1alpha1
+      kind: Middleware
+      metadata:
+        name: traefik-basic-authen
+        namespace: spcn19
+      spec:
+        basicAuth:
+          secret: dashboard-auth-secret
+          removeHeader: true
+      ---
+      apiVersion: v1
+      data:
+        users: c3BjbjE5OiQyeSQwNSQ5UHFNL3dQMGxXNC9iMTRSaEMxc3llMUJxME5VUjY2VnIxT29XZk5HVVFELzRxc09aVHNSMgoK
+      kind: Secret
+      metadata:
+        name: dashboard-auth-secret
+        namespace: spcn19
+      ---
+      apiVersion: traefik.containo.us/v1alpha1
+      kind: IngressRoute
+      metadata:
+        name: traefik-dashboard
+        namespace: spcn19
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.middlewares: traefik-basic-authen
+      spec:
+        entryPoints:
+          - websecure
+        routes:
+          - match: Host(`traefik.spcn19.local`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+            kind: Rule
+            middlewares:
+              - name: traefik-basic-authen
+                namespace: spcn19
+            services:
+              - name: api@internal
+                kind: TraefikService
+      ```
 
      </details>
 
