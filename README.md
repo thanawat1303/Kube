@@ -8,7 +8,7 @@
 - [Install tools kubernetes](#install-tools)
 - [Config cluster kubernetes](#Config-cluster)
 - [Deploy traefik](#deploy-traefik)
-- [Config cluster kubernetes](#deploy-service)
+- [Deploy service](#deploy-service)
 
 ---
 
