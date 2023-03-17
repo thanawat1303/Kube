@@ -86,10 +86,12 @@
     <details>
     <summary>Docker engine</summary>
 
-    - Install Linux Ubuntu on windows
-    - Install Docker Desktop
+    - Install linux ubuntu on windows
+    - Install docker desktop
       - https://www.docker.com/products/docker-desktop/
 
+    - Open docker desktop
+    
     </details>
 
 2. Config cluster kubernetes <a id="Config-cluster"></a>
