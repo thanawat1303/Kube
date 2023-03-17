@@ -1,7 +1,9 @@
 # Kubernetes
 ### Wakatime Url
   - https://wakatime.com/@spcn19/projects/gjjbzeqbft
-  
+
+---
+
 ### Step on Work
 - [Install Install tools Kubernetes](#install-tools)
 - [Config cluster Kubernetes](#Config-cluster)
@@ -34,19 +36,19 @@
 
       - Search environment
   
-        ![](image/environment.png | width=300 )
+        ![](image/environment.png)
 
       - Click Environment Variables...
 
-        ![](image/clickEnVa.png | width=300 )
+        ![](image/clickEnVa.png)
 
       - Select Path Click Edit
 
-        ![](image/selectPath.png | width=300 )
+        ![](image/selectPath.png)
 
       - Click New
         
-        ![](image/listPath.png | width=300 )
+        ![](image/listPath.png)
 
       - Add Path that have kubectl.exe
       - Click OK
@@ -113,13 +115,13 @@
      ```
      minikube dashboard #open addon
      ```
-     ![](image/dashboard-minikube.png | width=300 )
+     ![](image/dashboard-minikube.png)
 
    - Start Loadbalance minikube
      ```
      minikube tunnel
      ```
-     ![](image/miniTunnel.png | width=300 )
+     ![](image/miniTunnel.png)
 
 3. Deploy Traefik <a id="deploy-traefik"></a>
    - Ref
@@ -335,9 +337,13 @@
      ```
      ![](image/web_spcn19local.png | width=300) 
 
+---
+
 ### Command 
  - Ref 
    - https://minikube.sigs.k8s.io/docs/start/
+
+---
 
 ### LINK on Local
  - traefik.spcn19.local
