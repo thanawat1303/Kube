@@ -4,12 +4,17 @@
   
 ### Step on Work
 - [Install Install tools Kubernetes](#install-tools)
+- [Config cluster Kubernetes](#Config-cluster)
+- [Install Install tools Kubernetes](#install-tools)
+- [Config cluster Kubernetes](#Config-cluster)
+
+-
 1. Install tools Kubernetes <a id="install-tools"></a>
     <details>
     <summary>Ref</summary>
 
     - https://youtu.be/g-9H2urCSVY
-    
+
     </details>
 
     <details>
@@ -84,7 +89,7 @@
 
     </details>
 
-2. Config cluster Kubernetes
+2. Config cluster Kubernetes <a id="Config-cluster"></a>
    - Ref 
      - https://minikube.sigs.k8s.io/docs/drivers/docker/
 
@@ -115,7 +120,7 @@
      ```
      ![](image/miniTunnel.png | width=300 )
 
-3. Install Traefik ![Traefik]
+3. Deploy Traefik <a id="deploy-traefik"></a>
    - Ref
      - https://youtu.be/NpKkD6t278M
      - https://github.com/iamapinan/kubeplay-traefik
@@ -252,7 +257,7 @@
      ```
      ![](image/dashboard-t5k.png | width=300)
 
-4. Install Service
+4. Deploy Service <a id="deploy-Service"></a>
    - Create rancher-deployment.yaml
      <details>
      <summary>Show code</summary>
