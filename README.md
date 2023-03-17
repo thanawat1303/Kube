@@ -8,7 +8,8 @@
 - [Install Install tools Kubernetes](#install-tools)
 - [Config cluster Kubernetes](#Config-cluster)
 
--
+---
+
 1. Install tools Kubernetes <a id="install-tools"></a>
     <details>
     <summary>Ref</summary>
