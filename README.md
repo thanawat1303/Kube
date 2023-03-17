@@ -154,11 +154,28 @@
           # -o yaml => output file .yaml
           # --dry-run=client => create secure object not sent to kube API server but will check syntax and validation
         kubectl apply -f traefik-dashboard.yaml #Deploy traefik-dashboard.yaml for start traefik and dashboard
-        kubectl apply -f dashboard-secret.yaml #Deploy dashboard-secret.yaml for start secure traefik
+        kubectl apply -f dashboard-secret.yaml #Deploy dashboard-secret.yaml for start secure authentication traefik
         rm auth-secret #remove file auth-secret 
         rm dashboard-secret.yaml #remove file dashboard-secret.yaml
      }
      ```
+
+     </details>
+
+   - Example dashboard-secret.yaml 
+     <details>
+     <summary>Show code</summary>
+
+      ```yaml
+      apiVersion: v1
+      data:
+        users: "" #genarate hash by kubectl create secret generic
+      kind: Secret #define type object is Secret for authentication
+      metadata:
+        creationTimestamp: null
+        name: dashboard-auth-secret
+        namespace: "" #match Traefik in here genarate by powershell user enter namespace
+      ```
 
      </details>
 
@@ -174,7 +191,7 @@
         namespace: spcn19 #define namespace want install traefik-basic-authen
       spec: #define spec in traefik-basic-authen
         basicAuth: #define secure for access to traefik
-          secret: dashboard-auth-secret #define constant secure this is name dashboard-auth-secret
+          secret: dashboard-auth-secret #define pod secure this is name dashboard-auth-secret
           removeHeader: true #set remove header for upspeed and up efficiency
       ---
       apiVersion: traefik.containo.us/v1alpha1
@@ -192,11 +209,11 @@
           - match: Host(`traefik.spcn19.local`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`)) #define condition access traefik-dashboard
             kind: Rule #define type object is Rule for access
             middlewares: #define middleware before access service api@internal
-              - name: traefik-basic-authen #use middleware name traefik-basic-authen
+              - name: traefik-basic-authen #use middleware name traefik-basic-authen authentication
                 namespace: spcn19 #this run on space spcn19
             services: #services on Traefik
               - name: api@internal #name service
-                kind: TraefikService #define type object is TraefikService
+                kind: TraefikService #define type object is TraefikService for service api@internal
       ```
 
      </details>
