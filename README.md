@@ -115,7 +115,7 @@
      ```ps1
      #powershell
 
-     $KUBE_NAMESPACE = Read-Host -Prompt "Please enter you namespace " #Enter name space
+     $KUBE_NAMESPACE = Read-Host -Prompt "Please enter namespace in file traefik-dashboard.yaml " #Enter name space
      Write-Output "Traefik will install to $KUBE_NAMESPACE" 
 
      kubectl create namespace $KUBE_NAMESPACE #create namespace on cluster
@@ -147,7 +147,16 @@
 
      if ( -Not ("$UserTraefik" -eq " ")) { #Check emply value
         bash -c "htpasswd -nB $UserTraefik | tee auth-secret" #Create password to hash
-        bash -c "kubectl create secret generic -n traefik dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml" #Genarate secure password to users and create file dashboard-secret.yaml
+        bash -c "kubectl create secret generic -n $KUBE_NAMESPACE dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml" 
+          #create kubernetes secure and create dashboard-secret.yaml
+          # -n => namespace
+          # --from-file=users=auth-secret => set secure from file auth-secret and use is key users
+          # -o yaml => output file .yaml
+          # --dry-run=client => create secure object not sent to kube API server but will check syntax and validation
+        kubectl apply -f traefik-dashboard.yaml #apply traefik-dashboard.yaml for start traefik and dashboard
+        kubectl apply -f dashboard-secret.yaml #apply dashboard-secret.yaml for start secure traefik
+        rm auth-secret #remove file auth-secret 
+        rm dashboard-secret.yaml #remove file dashboard-secret.yaml
      }
      ```
 
@@ -158,28 +167,20 @@
      <summary>Show code</summary>
 
       ```yaml
-      apiVersion: traefik.containo.us/v1alpha1
-      kind: Middleware
+      apiVersion: traefik.containo.us/v1alpha1 #define api version is traefik.containo.us/v1alpha1 for revert proxy , load balance and auto set SSL/TLS option traefik
+      kind: Middleware #define kind is Middleware for connect service
       metadata:
-        name: traefik-basic-authen
-        namespace: spcn19
-      spec:
-        basicAuth:
-          secret: dashboard-auth-secret
-          removeHeader: true
-      ---
-      apiVersion: v1
-      data:
-        users: c3BjbjE5OiQyeSQwNSQ5UHFNL3dQMGxXNC9iMTRSaEMxc3llMUJxME5VUjY2VnIxT29XZk5HVVFELzRxc09aVHNSMgoK
-      kind: Secret
-      metadata:
-        name: dashboard-auth-secret
-        namespace: spcn19
+        name: traefik-basic-authen #define name traefik-basic-authen
+        namespace: spcn19 #define namespace for use traefik
+      spec: #define spec in traefik-basic-authen
+        basicAuth: #define secure for access to traefik
+          secret: dashboard-auth-secret #define constant secure this is name dashboard-auth-secret
+          removeHeader: true #set remove header for upspeed and up efficiency
       ---
       apiVersion: traefik.containo.us/v1alpha1
-      kind: IngressRoute
+      kind: IngressRoute #define kind ingressRount for setup rout to dashborad traefik
       metadata:
-        name: traefik-dashboard
+        name: traefik-dashboard #name
         namespace: spcn19
         annotations:
           kubernetes.io/ingress.class: traefik

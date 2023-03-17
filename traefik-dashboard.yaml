@@ -8,14 +8,6 @@ spec:
     secret: dashboard-auth-secret
     removeHeader: true
 ---
-apiVersion: v1
-data:
-  users: c3BjbjE5OiQyeSQwNSQ5UHFNL3dQMGxXNC9iMTRSaEMxc3llMUJxME5VUjY2VnIxT29XZk5HVVFELzRxc09aVHNSMgoK
-kind: Secret
-metadata:
-  name: dashboard-auth-secret
-  namespace: spcn19
----
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
