@@ -1,4 +1,4 @@
-#windows
+#powershell
 
 $KUBE_NAMESPACE = Read-Host -Prompt "Please enter you namespace "
 Write-Output "Traefik will install to $KUBE_NAMESPACE"

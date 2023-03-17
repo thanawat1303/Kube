@@ -67,7 +67,7 @@
 
     <details>
     <summary>Docker engine</summary>
-    
+
     - Install Linux Ubuntu on windown
     - Install Docker Desktop
       - https://www.docker.com/products/docker-desktop/
@@ -112,7 +112,44 @@
      <details>
      <summary>Show code</summary>
 
-     ```
+     ```ps1
+     #powershell
+
+     $KUBE_NAMESPACE = Read-Host -Prompt "Please enter you namespace " #Enter name space
+     Write-Output "Traefik will install to $KUBE_NAMESPACE" 
+
+     kubectl create namespace $KUBE_NAMESPACE #create namespace on cluster
+     kubectl config set-context --current --namespace=$KUBE_NAMESPACE #set config on kube defalt namespace
+     kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml #apply CRD define resource
+     kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml #apply RBAC kubernetes define role for CRD
+
+     if ( -Not (Get-Command scoop -ErrorAction Ignore)) { #check scoop already
+        #install scoop
+        $username = Read-Host -Prompt "Username "
+        irm get.scoop.sh | iex
+        $env:Path -split ';'
+        $env:Path += ";C:\Users\$username\scoop\shims"
+     }
+
+     if ( -Not (Get-Command helm -ErrorAction Ignore)) { #check helm already
+        #install helm
+        scoop install helm
+     }
+
+     helm repo add traefik https://traefik.github.io/charts
+     helm repo update
+     helm install traefik traefik/traefik
+
+     kubectl get svc -l app.kubernetes.io/name=traefik
+     kubectl get po -l app.kubernetes.io/name=traefik 
+
+     $confirm = Read-Host -Prompt "Confirm (Y/N) "
+     $UserTraefik = Read-Host -Prompt "Usrname Traefik "
+
+     if ("$confirm" -eq "Y") {
+        bash -c "htpasswd -nB $UserTraefik | tee auth-secret"
+        bash -c "kubectl create secret generic -n traefik dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml"
+     }
      ```
 
      </details>
@@ -147,6 +184,11 @@
      ```
      traefik.spcn19.local/dashboard/
      ```
+4. Install Service
+   - Create rancher-deployment.yaml
+     <details>
+     <summary>Show code</summary>
+     </details>
 
 ### Command 
  - Ref 
