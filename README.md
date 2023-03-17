@@ -10,7 +10,7 @@
 - [Deploy Traefik](#deploy-traefik)
 - [Config cluster Kubernetes](#deploy-service)
 
---
+---
 
 1. Install tools Kubernetes <a id="install-tools"></a>
     <details>
@@ -247,7 +247,7 @@
      ```
      kubectl get svc #look at EXTERNAL-IP
      ```
-     ![](image/External_IP.png | width=300)
+     ![](image/External_IP.png)
 
    - Set Domain in file host in path windows
      ```ruby
@@ -258,7 +258,7 @@
      ```
      traefik.spcn19.local/dashboard/
      ```
-     ![](image/dashboard-t5k.png | width=300)
+     ![](image/dashboard-t5k.png)
 
 4. Deploy Service <a id="deploy-service"></a>
    - Create rancher-deployment.yaml
@@ -335,7 +335,7 @@
      ```
      web.spcn19.local 
      ```
-     ![](image/web_spcn19local.png | width=300) 
+     ![](image/web_spcn19local.png) 
 
 ---
 
