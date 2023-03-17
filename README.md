@@ -5,10 +5,26 @@
 ---
 
 ### Step on Work
-:baby_bottle: [Install tools kubernetes](#install-tools)
-:earth_asia: [Config cluster kubernetes](#Config-cluster)
-:globe_with_meridians: [Deploy traefik](#deploy-traefik)
-:snowman: [Deploy service](#deploy-service)
+<div> 
+
+:baby_bottle:[Install tools kubernetes](#install-tools)
+
+</div>
+<div>
+
+:earth_asia:[Config cluster kubernetes](#Config-cluster)
+
+</div>
+<div>
+
+:globe_with_meridians:[Deploy traefik](#deploy-traefik)
+
+</div>
+<div>
+
+:snowman:[Deploy service](#deploy-service)
+
+</div>
 
 ---
 
