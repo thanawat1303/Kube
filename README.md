@@ -1,6 +1,13 @@
 # Kubernetes
+### Wakatime Url
+  - https://wakatime.com/@spcn19/projects/gjjbzeqbft
+  
 ### Step on Work
-1. Install tools Kubernetes
+- [Install Install tools Kubernetes](#install-tools)
+1. Install tools Kubernetes 
+<a id="install-tools"></a>
+   - Ref 
+     - https://youtu.be/g-9H2urCSVY
 
     <details>
     <summary>kubectl</summary>
@@ -18,19 +25,19 @@
 
       - Search environment
   
-        ![](image/environment.png)
+        ![](image/environment.png | width=300 )
 
       - Click Environment Variables...
 
-        ![](image/clickEnVa.png)
+        ![](image/clickEnVa.png | width=300 )
 
       - Select Path Click Edit
 
-        ![](image/selectPath.png)
+        ![](image/selectPath.png | width=300 )
 
       - Click New
         
-        ![](image/listPath.png)
+        ![](image/listPath.png | width=300 )
 
       - Add Path that have kubectl.exe
       - Click OK
@@ -97,13 +104,15 @@
      ```
      minikube dashboard #open addon
      ```
+     ![](image/dashboard-minikube.png | width=300 )
 
    - Start Loadbalance minikube
      ```
      minikube tunnel
      ```
+     ![](image/miniTunnel.png | width=300 )
 
-3. Install Traefik
+3. Install Traefik ![Traefik]
    - Ref
      - https://youtu.be/NpKkD6t278M
      - https://github.com/iamapinan/kubeplay-traefik
@@ -227,6 +236,7 @@
      ```
      kubectl get svc #look at EXTERNAL-IP
      ```
+     ![](image/External_IP.png | width=300)
 
    - Set Domain in file host in path windows
      ```ruby
@@ -237,7 +247,7 @@
      ```
      traefik.spcn19.local/dashboard/
      ```
-     ![](dashboard-t5k.png)
+     ![](image/dashboard-t5k.png | width=300)
 
 4. Install Service
    - Create rancher-deployment.yaml
@@ -314,7 +324,7 @@
      ```
      web.spcn19.local 
      ```
-     ![](web_spcn19local.png) 
+     ![](image/web_spcn19local.png | width=300) 
 
 ### Command 
  - Ref 
