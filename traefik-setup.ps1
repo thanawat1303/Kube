@@ -28,7 +28,7 @@ $UserTraefik = Read-Host -Prompt "Username Traefik "
 
 if ( -Not ("$UserTraefik" -eq " ")) {
     bash -c "htpasswd -nB $UserTraefik | tee auth-secret"
-    bash -c "kubectl create secret generic -n $KUBE_NAMESPACE dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml" 
+    kubectl create secret generic -n $KUBE_NAMESPACE dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml
     kubectl apply -f traefik-dashboard.yaml
     kubectl apply -f dashboard-secret.yaml
     rm auth-secret

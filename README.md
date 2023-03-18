@@ -108,6 +108,7 @@
 
 2. Config cluster kubernetes <a id="Config-cluster"></a>
    - Ref 
+     - https://youtu.be/g-9H2urCSVY
      - https://minikube.sigs.k8s.io/docs/drivers/docker/
 
    - Create/Start Cluster minikube in docker on Command Prompt
@@ -159,7 +160,7 @@
      ```ps1
      #powershell
 
-     $KUBE_NAMESPACE = Read-Host -Prompt "Please enter namespace in file traefik-dashboard.yaml " #Enter name space
+     $KUBE_NAMESPACE = Read-Host -Prompt "Please enter namespace in file traefik-dashboard.yaml " #Enter name space same namespace in traefik-dashboard.yaml
      Write-Output "Traefik will install to $KUBE_NAMESPACE" 
 
      kubectl create namespace $KUBE_NAMESPACE #create namespace on cluster
@@ -191,7 +192,7 @@
 
      if ( -Not ("$UserTraefik" -eq " ")) { #Check emply value
         bash -c "htpasswd -nB $UserTraefik | tee auth-secret" #Create password to hash
-        bash -c "kubectl create secret generic -n $KUBE_NAMESPACE dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml" 
+        kubectl create secret generic -n $KUBE_NAMESPACE dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml
           #create kubernetes secure and create dashboard-secret.yaml
           # -n => namespace
           # --from-file=users=auth-secret => set secure from file auth-secret and use is key users
