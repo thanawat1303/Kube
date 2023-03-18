@@ -153,9 +153,8 @@
      - https://youtu.be/NpKkD6t278M
      - https://github.com/iamapinan/kubeplay-traefik
 
-   - Create file traefik-dashboard.yaml
-     <details>
-     <summary>Show code</summary>
+   - <details>
+     <summary>Create file traefik-dashboard.yaml</summary>
 
       ```yaml
       apiVersion: traefik.containo.us/v1alpha1 #define api version is traefik.containo.us/v1alpha1 for revert proxy , load balance and auto set SSL/TLS option traefik
@@ -192,7 +191,7 @@
 
      </details>
 
-     <details>
+   - <details>
      <summary>Step by Step</summary>
       
       - Create namespace
@@ -245,7 +244,7 @@
     
      </details>
 
-     <details>
+   - <details>
      <summary>Easy step</summary>
       
       - Create file traefik-setup.ps1
