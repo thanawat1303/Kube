@@ -204,13 +204,17 @@
 
      kubectl create namespace $KUBE_NAMESPACE #create namespace on cluster
      kubectl config set-context --current --namespace=$KUBE_NAMESPACE #set config on kube defalt namespace
+
      kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml #apply CRD define resource ingress middleware tls
      kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml #apply RBAC kubernetes define role for CRD
 
      if ( -Not (Get-Command scoop -ErrorAction Ignore)) { #check scoop already
         #install scoop
         $username = Read-Host -Prompt "Username " #Read Username computer
+
+        Set-ExecutionPolicy RemoteSigned -Scope CurrentUser #allow powershell script use from internet and -Scope CurrentUser this is user present
         irm get.scoop.sh | iex #install scoop
+
         $env:Path -split ';' > $null #define environment
         $env:Path += ";C:\Users\$username\scoop\shims" > $null #define environment
      }
@@ -239,10 +243,62 @@
           # --dry-run=client => create secure object not sent to kube API server but will check syntax and validation
         kubectl apply -f traefik-dashboard.yaml #Deploy traefik-dashboard.yaml for start traefik and dashboard
         kubectl apply -f dashboard-secret.yaml #Deploy dashboard-secret.yaml for start secure authentication traefik
+        
         rm auth-secret #remove file auth-secret 
         rm dashboard-secret.yaml #remove file dashboard-secret.yaml
      }
      ```
+
+     </details>
+
+     <details>
+     <summary>Step by step</summary>
+
+     - Create namespace
+       ```ps1
+       kubectl create namespace <namespace> #create namespace on cluster
+       kubectl config set-context --current --namespace=<namespace> #set config on kube defalt namespace
+       ```
+
+     - Deploy resource CRD and RBAC
+       ```ps1
+       kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
+       kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml 
+       ```
+
+     - Install helm
+       ```ps1
+       Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+       irm get.scoop.sh | iex
+       $env:Path -split ';' > $null
+       $env:Path += ";C:\Users\<username>\scoop\shims" > $null
+       scoop install helm
+       ```
+
+     - Install traefik charts
+       ```ps1
+       helm repo add traefik https://traefik.github.io/charts
+       helm repo update
+       helm install traefik traefik/traefik
+       ```
+
+     - Get traefik service and traefik pod
+       ```ps1
+       kubectl get svc -l app.kubernetes.io/name=traefik
+       kubectl get po -l app.kubernetes.io/name=traefik
+       ```
+
+     - Create authenticat secret traefik dashboard
+       ```ps1
+       bash -c "htpasswd -nB <user login traefik> | tee auth-secret"
+       kubectl create secret generic -n <namespace> dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml
+       ```
+
+     - Deploy secret traefik and traefik dashboard
+       ```ps1
+       kubectl apply -f traefik-dashboard.yaml
+       kubectl apply -f dashboard-secret.yaml
+       ```
 
      </details>
 
