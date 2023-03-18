@@ -153,7 +153,7 @@
      - https://youtu.be/NpKkD6t278M
      - https://github.com/iamapinan/kubeplay-traefik
 
-   - Create file traefik-dashboard.yaml
+   - Create traefik-dashboard.yaml
      <details>
      <summary>Show code</summary>
 
