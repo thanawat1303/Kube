@@ -256,8 +256,8 @@
 
      - Create namespace
        ```ps1
-       kubectl create namespace <namespace> #create namespace on cluster
-       kubectl config set-context --current --namespace=<namespace> #set config on kube defalt namespace
+       kubectl create namespace <namespace>
+       kubectl config set-context --current --namespace=<namespace>
        ```
 
      - Deploy resource CRD and RBAC
