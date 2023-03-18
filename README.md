@@ -171,8 +171,8 @@
         #install scoop
         $username = Read-Host -Prompt "Username " #Read Username computer
         irm get.scoop.sh | iex #install scoop
-        $env:Path -split ';' #define environment
-        $env:Path += ";C:\Users\$username\scoop\shims" #define environment
+        $env:Path -split ';' > $null #define environment
+        $env:Path += ";C:\Users\$username\scoop\shims" > $null #define environment
      }
 
      if ( -Not (Get-Command helm -ErrorAction Ignore)) { #check helm already
@@ -280,7 +280,7 @@
 
    - Test Open Traefik dashboard
      ```
-     traefik.spcn19.local/dashboard/
+     https://traefik.spcn19.local/dashboard/
      ```
      <details>
      <summary>Show dashboard</summary>
@@ -296,7 +296,7 @@
      
      ```yaml
       apiVersion: apps/v1 #define apiVersion is apps/v1
-      kind: Deployment #define type object is dashboard for create pod
+      kind: Deployment #define type object is deployment for create pod replicas and rolling update
       metadata: #define metadata for deployment
         name: rancher-deployment #define name object is rancher-deployment
         namespace: spcn19 #define namespace want install rancher-deployment
@@ -305,10 +305,10 @@
         selector: #define selector pod
           matchLabels: #define match label pod to deployment
             app: rancher #define label pod want create on deployment
-        template: #define pod template create container
+        template: #define template create container
           metadata:
             labels:
-              app: rancher #create pod on deployment matchLabels app: rancher
+              app: rancher #create on deployment matchLabels is app: rancher
           spec: #spec on pod
             containers: #create container
             - name: rancher #name container
@@ -322,13 +322,13 @@
         name: rancher-service
         labels:
           name: rancher-service
-        namespace: spcn19
-      spec:
+        namespace: spcn19 #run on namespace spcn19
+      spec: #define service for access pod
         selector: #define selector pod match service will loadbalance
-          app: rancher #label match select pod
+          app: rancher #label match pod label app: rancher => rancher-deployment
         ports:
         - name: http #name port
-          port: 80 #port running on host
+          port: 80 #port service running on host
           protocol: TCP #protocal that the service use
           targetPort: 80 #port that container use
       ---
