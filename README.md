@@ -246,6 +246,24 @@
         
         rm auth-secret #remove file auth-secret 
         rm dashboard-secret.yaml #remove file dashboard-secret.yaml
+
+        $spinner = '/','-','\','|' #define animetion spinner
+        $i = 0 #define index animetion
+        while ($true) { #loop check Create container complete
+
+            $status = Invoke-Expression -Command "kubectl get pods -l app.kubernetes.io/name=traefik --field-selector=status.phase=Running --ignore-not-found=true" #check status po is Running create container complete
+              # --ignore-not-found=true => ignore error when not found resouce
+            if (-Not ("$status" -eq '')){ #check when container ready
+                Write-Host ""
+                Write-Host ">>> Install Treafik dashboard Complete <<<" -ForegroundColor Green #show output and color text green
+                break #stop loop
+            }
+
+            Write-Host -NoNewline "`r Installing Treafik dashboard ...$($spinner[$i])" #show text loading container create
+            $i = ($i + 1) % $spinner.Length #loop index and when last index will return to first index
+            Start-Sleep -Milliseconds 100 #delay 100 millisec
+        }
+
      }
      ```
 

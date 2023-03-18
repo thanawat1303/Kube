@@ -32,7 +32,7 @@ kubectl get po -l app.kubernetes.io/name=traefik
 
 $UserTraefik = Read-Host -Prompt "Username Traefik "
 
-if ( -Not ("$UserTraefik" -eq " ")) {
+if ( -Not ("$UserTraefik" -eq '')) {
     bash -c "htpasswd -nB $UserTraefik | tee auth-secret"
     kubectl create secret generic -n $KUBE_NAMESPACE dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml
     
@@ -41,4 +41,21 @@ if ( -Not ("$UserTraefik" -eq " ")) {
 
     rm auth-secret
     rm dashboard-secret.yaml
+
+    $spinner = '/','-','\','|'
+    $i = 0
+    while ($true) {
+
+        $status = Invoke-Expression -Command "kubectl get pods -l app.kubernetes.io/name=traefik --field-selector=status.phase=Running --ignore-not-found=true"
+        if (-Not ("$status" -eq '')){
+            Write-Host ""
+            Write-Host ">>> Install Treafik dashboard Complete <<<" -ForegroundColor Green
+            break
+        }
+
+        Write-Host -NoNewline "`r Installing Treafik dashboard ...$($spinner[$i])"
+        $i = ($i + 1) % $spinner.Length
+        Start-Sleep -Milliseconds 100
+    }
+    
 }
