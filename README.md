@@ -244,8 +244,8 @@
         name: traefik-dashboard
         namespace: spcn19 #define namespace want install traefik-dashboard
         annotations:
-          kubernetes.io/ingress.class: traefik #define connect ingress this is traefik
-          traefik.ingress.kubernetes.io/router.middlewares: traefik-basic-authen #define middleware use in ingress
+          kubernetes.io/ingress.class: traefik #define connect ingress this is traefik for set ingress
+          traefik.ingress.kubernetes.io/router.middlewares: traefik-basic-authen #define middleware use in ingress by start from ingress.class
       spec: #define spec in traefik-dashboard
         entryPoints:
           - websecure #define entrypoints is websecure
