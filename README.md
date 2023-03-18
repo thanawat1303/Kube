@@ -192,122 +192,122 @@
 
      </details>
 
-   <details>
-   <summary>Step by Step</summary>
-    
-    - Create namespace
-      ```ps1
-      kubectl create namespace <namespace>
-      kubectl config set-context --current --namespace=<namespace>
-      ```
+     <details>
+     <summary>Step by Step</summary>
+      
+      - Create namespace
+        ```ps1
+        kubectl create namespace <namespace>
+        kubectl config set-context --current --namespace=<namespace>
+        ```
 
-    - Deploy CRD and RBAC of kubernetes
-      ```ps1
-      kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
-      kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml
-      ```
+      - Deploy CRD and RBAC of kubernetes
+        ```ps1
+        kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
+        kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml
+        ```
 
-    - Install helm
-      ```ps1
-      Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-      irm get.scoop.sh | iex
-      scoop install helm
-      ```
-
-    - Install traefik chart
-      ```
-      helm repo add traefik https://traefik.github.io/charts
-      helm repo update 
-      helm install traefik traefik/traefik
-      ```
-
-    - Check service and pod traefik
-      ```ps1
-      kubectl get svc -l app.kubernetes.io/name=traefik
-      kubectl get po -l app.kubernetes.io/name=traefik
-      ```
-
-    - Define authenticat password traefik
-      ```ps1
-      bash -c "htpasswd -nB user | tee auth-secret"
-      kubectl create secret generic -n <namespace> dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml
-      ```
-
-    - Deploy traefik and dashboard
-      ```ps1
-      kubectl apply -f traefik-dashboard.yaml
-      ```
-
-    - Deploy secure authentication traefik
-      ```ps1
-      kubectl apply -f dashboard-secret.yaml
-      ```
-  
-   </details>
-
-   <details>
-   <summary>Easy step</summary>
-    
-    - Create file traefik-setup.ps1
-    - <details>
-      <summary>Show code</summary>
-
-      ```ps1
-      #powershell
-
-      $KUBE_NAMESPACE = Read-Host -Prompt "Please enter namespace in file traefik-dashboard.yaml " #Enter name space same namespace in traefik-dashboard.yaml
-      Write-Output "Traefik will install to $KUBE_NAMESPACE" 
-
-      kubectl create namespace $KUBE_NAMESPACE #create namespace on cluster
-      kubectl config set-context --current --namespace=$KUBE_NAMESPACE #set config on kube defalt namespace
-      kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml #deploy CRD define resource ingress middleware tls
-      kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml #apply RBAC kubernetes define role for CRD
-
-      if ( -Not (Get-Command scoop -ErrorAction Ignore)) { #check scoop already
-        #install scoop
-        $username = Read-Host -Prompt "Username " #Read Username computer
-        irm get.scoop.sh | iex #install scoop
-        $env:Path -split ';' > $null #define environment
-        $env:Path += ";C:\Users\$username\scoop\shims" > $null #define environment
-      }
-
-      if ( -Not (Get-Command helm -ErrorAction Ignore)) { #check helm already
-        #install helm
+      - Install helm
+        ```ps1
+        Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+        irm get.scoop.sh | iex
         scoop install helm
-      }
+        ```
 
-      helm repo add traefik https://traefik.github.io/charts # add repo traefik charts is traefik in helm
-      helm repo update # update repo to make prepare install traefik charts
-      helm install traefik traefik/traefik # Install traefik chart to make loadbalance and reverse Proxy 
+      - Install traefik chart
+        ```
+        helm repo add traefik https://traefik.github.io/charts
+        helm repo update 
+        helm install traefik traefik/traefik
+        ```
 
-      kubectl get svc -l app.kubernetes.io/name=traefik #Get service label name app.kubernetes.io/ name = traefik
-      kubectl get po -l app.kubernetes.io/name=traefik #Get pod label name app.kubernetes.io/ name = traefik
+      - Check service and pod traefik
+        ```ps1
+        kubectl get svc -l app.kubernetes.io/name=traefik
+        kubectl get po -l app.kubernetes.io/name=traefik
+        ```
 
-      $UserTraefik = Read-Host -Prompt "Username Traefik " #Enter Username Login Traefik
+      - Define authenticat password traefik
+        ```ps1
+        bash -c "htpasswd -nB user | tee auth-secret"
+        kubectl create secret generic -n <namespace> dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml
+        ```
 
-      if ( -Not ("$UserTraefik" -eq " ")) { #Check emply value
-        bash -c "htpasswd -nB $UserTraefik | tee auth-secret" #Create password to hash and secret of authenticat traefik
-        kubectl create secret generic -n $KUBE_NAMESPACE dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml
-          #create kubernetes secure and create dashboard-secret.yaml
-          # -n => namespace
-          # --from-file=users=auth-secret => set secure from file auth-secret and use is key users
-          # -o yaml => output file .yaml
-          # --dry-run=client => create secure object not sent to kube API server but will check syntax and validation
-        kubectl apply -f traefik-dashboard.yaml #Deploy traefik-dashboard.yaml for start traefik and dashboard
-        kubectl apply -f dashboard-secret.yaml #Deploy dashboard-secret.yaml for start secure authentication traefik
-        rm auth-secret #remove file auth-secret 
-        rm dashboard-secret.yaml #remove file dashboard-secret.yaml
-      }
+      - Deploy traefik and dashboard
+        ```ps1
+        kubectl apply -f traefik-dashboard.yaml
+        ```
+
+      - Deploy secure authentication traefik
+        ```ps1
+        kubectl apply -f dashboard-secret.yaml
+        ```
+    
+     </details>
+
+     <details>
+     <summary>Easy step</summary>
+      
+      - Create file traefik-setup.ps1
+        - <details>
+          <summary>Show code</summary>
+
+          ```ps1
+          #powershell
+
+          $KUBE_NAMESPACE = Read-Host -Prompt "Please enter namespace in file traefik-dashboard.yaml " #Enter name space same namespace in traefik-dashboard.yaml
+          Write-Output "Traefik will install to $KUBE_NAMESPACE" 
+
+          kubectl create namespace $KUBE_NAMESPACE #create namespace on cluster
+          kubectl config set-context --current --namespace=$KUBE_NAMESPACE #set config on kube defalt namespace
+          kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml #deploy CRD define resource ingress middleware tls
+          kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.9/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml #apply RBAC kubernetes define role for CRD
+
+          if ( -Not (Get-Command scoop -ErrorAction Ignore)) { #check scoop already
+            #install scoop
+            $username = Read-Host -Prompt "Username " #Read Username computer
+            irm get.scoop.sh | iex #install scoop
+            $env:Path -split ';' > $null #define environment
+            $env:Path += ";C:\Users\$username\scoop\shims" > $null #define environment
+          }
+
+          if ( -Not (Get-Command helm -ErrorAction Ignore)) { #check helm already
+            #install helm
+            scoop install helm
+          }
+
+          helm repo add traefik https://traefik.github.io/charts # add repo traefik charts is traefik in helm
+          helm repo update # update repo to make prepare install traefik charts
+          helm install traefik traefik/traefik # Install traefik chart to make loadbalance and reverse Proxy 
+
+          kubectl get svc -l app.kubernetes.io/name=traefik #Get service label name app.kubernetes.io/ name = traefik
+          kubectl get po -l app.kubernetes.io/name=traefik #Get pod label name app.kubernetes.io/ name = traefik
+
+          $UserTraefik = Read-Host -Prompt "Username Traefik " #Enter Username Login Traefik
+
+          if ( -Not ("$UserTraefik" -eq " ")) { #Check emply value
+            bash -c "htpasswd -nB $UserTraefik | tee auth-secret" #Create password to hash and secret of authenticat traefik
+            kubectl create secret generic -n $KUBE_NAMESPACE dashboard-auth-secret --from-file=users=auth-secret -o yaml --dry-run=client | tee dashboard-secret.yaml
+              #create kubernetes secure and create dashboard-secret.yaml
+              # -n => namespace
+              # --from-file=users=auth-secret => set secure from file auth-secret and use is key users
+              # -o yaml => output file .yaml
+              # --dry-run=client => create secure object not sent to kube API server but will check syntax and validation
+            kubectl apply -f traefik-dashboard.yaml #Deploy traefik-dashboard.yaml for start traefik and dashboard
+            kubectl apply -f dashboard-secret.yaml #Deploy dashboard-secret.yaml for start secure authentication traefik
+            rm auth-secret #remove file auth-secret 
+            rm dashboard-secret.yaml #remove file dashboard-secret.yaml
+          }
+          ```
+
+          </details>
+
+      - Run file traefik-setup.ps1
+      ```
+      ./traefik-setup.ps1
       ```
 
-      </details>
-
-    - Run file traefik-setup.ps1
-     ```
-     ./traefik-setup.ps1
-     ```
-
-   </details>
+     </details>
     
    - Example dashboard-secret.yaml 
      <details>
@@ -346,7 +346,7 @@
 
      ![](image/dashboard-t5k.png)
 
-     </details>
+   </details>
 
 4. Deploy service <a id="deploy-service"></a>
    - Create rancher-deployment.yaml
